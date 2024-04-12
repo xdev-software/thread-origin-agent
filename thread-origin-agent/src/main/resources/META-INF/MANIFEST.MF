@@ -1,2 +1,0 @@
-Premain-Class: software.xdev.tools.threadoriginagent.ThreadOriginTransformer
-Can-Retransform-Classes: true
