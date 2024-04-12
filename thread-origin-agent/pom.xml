@@ -5,20 +5,20 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>software.xdev</groupId>
-	<artifactId>standard-maven-template</artifactId>
+	<artifactId>thread-origin-agent</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>standard-maven-template</name>
-	<description>standard-maven-template</description>
-	<url>https://github.com/xdev-software/standard-maven-template</url>
+	<name>thread-origin-agent</name>
+	<description>thread-origin-agent</description>
+	<url>https://github.com/xdev-software/thread-origin-agent</url>
 
 	<scm>
-		<url>https://github.com/xdev-software/standard-maven-template</url>
-		<connection>scm:git:https://github.com/xdev-software/standard-maven-template.git</connection>
+		<url>https://github.com/xdev-software/thread-origin-agent</url>
+		<connection>scm:git:https://github.com/xdev-software/thread-origin-agent.git</connection>
 	</scm>
 
-	<inceptionYear>2023</inceptionYear>
+	<inceptionYear>2024</inceptionYear>
 
 	<organization>
 		<name>XDEV Software</name>
