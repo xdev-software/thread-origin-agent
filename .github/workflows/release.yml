@@ -125,8 +125,7 @@ jobs:
       uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ needs.prepare_release.outputs.upload_url }}
-        asset_path: target/${{ env.PRIMARY_MAVEN_MODULE }}-*.jar
-      working-directory: ${{ env.PRIMARY_MAVEN_MODULE }}
+        asset_path: ${{ env.PRIMARY_MAVEN_MODULE }}/target/${{ env.PRIMARY_MAVEN_MODULE }}-*.jar
 
   publish-pages:
     runs-on: ubuntu-latest
