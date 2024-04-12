@@ -2,7 +2,7 @@
 
 # thread-origin-agent
 
-In many situations is it helpful to find out who created a **Thread**.
+In many situations is it helpful to find out who created a [Thread](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Thread.html).
 
 To find the origin of a thread, this project provides a [javaagent](https://docs.oracle.com/en/java/javase/21/docs/api/java.instrument/java/lang/instrument/package-summary.html) which logs the stacktrace at Thread creation.
 
