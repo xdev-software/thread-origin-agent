@@ -97,14 +97,7 @@ jobs:
           See [Changelog#v${{ steps.version.outputs.release }}](https://github.com/xdev-software/${{ env.PRIMARY_MAVEN_MODULE }}/blob/develop/CHANGELOG.md#${{ steps.version.outputs.releasenumber }}) for more information.
 
           ## Installation
-          Add the following lines to your pom:
-          ```XML
-          <dependency>
-             <groupId>software.xdev</groupId>
-             <artifactId>${{ env.PRIMARY_MAVEN_MODULE }}</artifactId>
-             <version>${{ steps.version.outputs.release }}</version>
-          </dependency>
-          ```
+          Download the javaagent from the assets section below and attach it to your java application.
 
   publish_central: # Publish the code to central
     runs-on: ubuntu-latest
@@ -118,23 +111,21 @@ jobs:
         git config --global user.name "GitHub Actions"
         git pull
     
-    - name: Set up JDK Apache Maven Central
+    - name: Set up JDK
       uses: actions/setup-java@v4
-      with: # running setup-java again overwrites the settings.xml
+      with:
         java-version: '17'
         distribution: 'temurin'
-        server-id: ossrh
-        server-username: MAVEN_CENTRAL_USERNAME
-        server-password: MAVEN_CENTRAL_TOKEN
-        gpg-passphrase: MAVEN_GPG_PASSPHRASE
-        gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
 
-    - name: Publish to Apache Maven Central
-      run: ../mvnw -B deploy -Possrh
-      env:
-        MAVEN_CENTRAL_USERNAME: ${{ secrets.S01_OSS_SONATYPE_MAVEN_USERNAME }}
-        MAVEN_CENTRAL_TOKEN: ${{ secrets.S01_OSS_SONATYPE_MAVEN_TOKEN }}
-        MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+    - name: Build
+      run: ../mvnw -B clean package
+      working-directory: ${{ env.PRIMARY_MAVEN_MODULE }}
+
+    - name: Upload Assets
+      uses: shogo82148/actions-upload-release-asset@v1
+      with:
+        upload_url: ${{ needs.prepare_release.outputs.upload_url }}
+        asset_path: target/${{ env.PRIMARY_MAVEN_MODULE }}-*.jar
       working-directory: ${{ env.PRIMARY_MAVEN_MODULE }}
 
   publish-pages:

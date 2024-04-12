@@ -1,13 +1,21 @@
-[![Latest version](https://img.shields.io/maven-central/v/software.xdev/standard-maven-template?logo=apache%20maven)](https://mvnrepository.com/artifact/software.xdev/standard-maven-template)
-[![Build](https://img.shields.io/github/actions/workflow/status/xdev-software/standard-maven-template/checkBuild.yml?branch=develop)](https://github.com/xdev-software/standard-maven-template/actions/workflows/checkBuild.yml?query=branch%3Adevelop)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=xdev-software_standard-maven-template&metric=alert_status)](https://sonarcloud.io/dashboard?id=xdev-software_standard-maven-template)
+[![Build](https://img.shields.io/github/actions/workflow/status/xdev-software/thread-origin-agent/checkBuild.yml?branch=develop)](https://github.com/xdev-software/thread-origin-agent/actions/workflows/checkBuild.yml?query=branch%3Adevelop)
 
-# standard-maven-template
+# thread-origin-agent
 
+In many situations is it helpful to find out who created a [Thread](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Thread.html).
+
+To find the origin of a thread, this project provides a [javaagent](https://docs.oracle.com/en/java/javase/21/docs/api/java.instrument/java/lang/instrument/package-summary.html) which logs the stacktrace at Thread creation.
 
 ## Installation
-[Installation guide for the latest release](https://github.com/xdev-software/standard-maven-template/releases/latest#Installation)
+[Installation guide for the latest release](https://github.com/xdev-software/thread-origin-agent/releases/latest#Installation)
 
+## Usage
+Insert ``-javaagent:<pathTothread-origin-agent.jar>=<packagesToIgnore>`` into the JVM-arguments (at the beginning!)<br/>
+Examples:
+```bash
+java -jar <appToInspect>.jar -javaagent:thread-origin-agent-1.0.0.jar
+java -jar <appToInspect>.jar -javaagent:"C:\temp\thread-origin-agent-1.0.0.jar"=sun/awt,sun/java2d
+```
 
 ## Support
 If you need support as soon as possible and you can't wait for any pull request, feel free to use [our support](https://xdev.software/en/services/support).
@@ -16,4 +24,6 @@ If you need support as soon as possible and you can't wait for any pull request,
 See the [contributing guide](./CONTRIBUTING.md) for detailed instructions on how to get started with our project.
 
 ## Dependencies and Licenses
-View the [license of the current project](LICENSE) or the [summary including all dependencies](https://xdev-software.github.io/standard-maven-template/dependencies)
+View the [license of the current project](LICENSE) or the [summary including all dependencies](https://xdev-software.github.io/thread-origin-agent/dependencies)
+
+<sub>This project was inspired by [kreyssel/maven-examples](https://github.com/kreyssel/maven-examples)</sub>

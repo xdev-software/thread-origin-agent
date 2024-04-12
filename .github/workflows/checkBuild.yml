@@ -21,7 +21,6 @@ on:
 
 env:
   PRIMARY_MAVEN_MODULE: ${{ github.event.repository.name }}
-  DEMO_MAVEN_MODULE: ${{ github.event.repository.name }}-demo
 
 jobs:
   build:
@@ -63,11 +62,11 @@ jobs:
           exit 1
         fi
 
-    - name: Upload demo files
+    - name: Upload files
       uses: actions/upload-artifact@v4
       with:
-        name: demo-files-java-${{ matrix.java }}
-        path: ${{ env.DEMO_MAVEN_MODULE }}/target/${{ env.DEMO_MAVEN_MODULE }}.jar
+        name: files-java-${{ matrix.java }}
+        path: ${{ env.PRIMARY_MAVEN_MODULE }}/target/${{ env.PRIMARY_MAVEN_MODULE }}-*.jar
         if-no-files-found: error
 
   code-style:
