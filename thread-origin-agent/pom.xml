@@ -18,7 +18,7 @@
 		<connection>scm:git:https://github.com/xdev-software/thread-origin-agent.git</connection>
 	</scm>
 
-	<inceptionYear>2024</inceptionYear>
+	<inceptionYear>2019</inceptionYear>
 
 	<organization>
 		<name>XDEV Software</name>
@@ -73,16 +73,13 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
+	<dependencies>
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.30.2-GA</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<pluginManagement>
@@ -140,34 +137,26 @@
 					</compilerArgs>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.6.3</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.7.1</version>
 				<configuration>
-					<quiet>true</quiet>
-					<doclint>none</doclint>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<appendAssemblyId>false</appendAssemblyId>
+					<archive>
+						<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+					</archive>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.3.1</version>
 				<executions>
 					<execution>
-						<id>attach-sources</id>
-						<phase>verify</phase>
+						<id>make-assembly</id>
+						<phase>package</phase>
 						<goals>
-							<goal>jar-no-fork</goal>
+							<goal>single</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -175,49 +164,6 @@
 		</plugins>
 	</build>
 	<profiles>
-		<profile>
-			<id>ossrh</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-gpg-plugin</artifactId>
-						<version>3.2.2</version>
-						<executions>
-							<execution>
-								<id>sign-artifacts</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-								<configuration>
-									<!-- Fixes "gpg: signing failed: Inappropriate ioctl for device" -->
-									<!-- Prevent `gpg` from using pinentry programs -->
-									<gpgArguments>
-										<arg>--pinentry-mode</arg>
-										<arg>loopback</arg>
-									</gpgArguments>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					
-					<plugin>
-						<groupId>org.sonatype.plugins</groupId>
-						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>1.6.13</version>
-						<extensions>true</extensions>
-						<configuration>
-							<serverId>ossrh</serverId>
-							<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-							<!-- Sometimes OSSRH is really slow -->
-							<stagingProgressTimeoutMinutes>30</stagingProgressTimeoutMinutes>
-							<autoReleaseAfterClose>true</autoReleaseAfterClose>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
 		<profile>
 			<id>checkstyle</id>
 			<build>
