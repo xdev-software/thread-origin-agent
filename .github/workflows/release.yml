@@ -97,7 +97,7 @@ jobs:
           See [Changelog#v${{ steps.version.outputs.release }}](https://github.com/xdev-software/${{ env.PRIMARY_MAVEN_MODULE }}/blob/develop/CHANGELOG.md#${{ steps.version.outputs.releasenumber }}) for more information.
 
           ## Installation
-          Download the javaagent from the assets section below and attach it to your java application.
+          Download the javaagent from the assets section below and [attach it to your java application](https://github.com/xdev-software/thread-origin-agent#usage).
 
   publish_assets:
     runs-on: ubuntu-latest
