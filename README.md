@@ -18,7 +18,7 @@ java -jar <appToInspect>.jar -javaagent:"C:\temp\thread-origin-agent-1.0.0.jar"=
 ```
 
 > [!NOTE]
-> Please note that it's not possible to monitor all ``Thread`` starts as the ``Thread`` is loaded extremely early. 
+> Please note that it's not possible to monitor all ``Thread`` starts as the ``Thread`` class is loaded and used extremely early.
 > Some static instantiations that use Threads e.g. ``ForkJoinPool#common`` are therefore not affected by changing the underlying bytecode.
 
 ## Support
