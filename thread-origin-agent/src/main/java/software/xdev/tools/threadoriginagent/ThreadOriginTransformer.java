@@ -34,21 +34,18 @@ import javassist.expr.MethodCall;
 /**
  * This javaagent should ALWAYS be the first!
  */
-@SuppressWarnings("java:S106")
 public class ThreadOriginTransformer implements ClassFileTransformer
 {
 	private static final String PROCEED = "$proceed($$); ";
 	
 	private static final String PRINT_STACK =
 		"java.lang.StackTraceElement[] elements = java.lang.Thread.currentThread().getStackTrace(); "
-			+
-			"java.lang.StringBuilder sb = new java.lang.StringBuilder(); "
-			+
-			"for(int i=0; i<elements.length; i++) "
-			+
-			"   sb.append(\"\\t\").append(elements[i]).append(java.lang.System.lineSeparator()); "
-			+
-			"java.lang.System.out.println(sb.toString()); ";
+			+ "java.lang.StringBuilder sb = new java.lang.StringBuilder(); "
+			+ "for(int i = 1; i < elements.length; i++) "
+			+ "   sb.append(\"[TOA] \\t\")"
+			+ "      .append(elements[i])"
+			+ "      .append(i < elements.length - 1 ? java.lang.System.lineSeparator() : \"\"); "
+			+ "java.lang.System.out.println(sb.toString()); ";
 	
 	/**
 	 * Don't log calls to classnames if they start with the string mentioned here<br/> e.g:
@@ -60,14 +57,14 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 	{
 		super();
 		
-		System.out.println("Arg: " + argument);
+		log("Arg: " + argument);
 		
 		if(argument != null)
 		{
 			this.excluded.addAll(Arrays.asList(argument.split(",")));
 		}
 		
-		System.out.println("Ignoring excluded: " + String.join(",", this.excluded));
+		log("Ignoring excluded: " + String.join(",", this.excluded));
 	}
 	
 	/**
@@ -80,15 +77,15 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 	{
 		instrumentation.addTransformer(new ThreadOriginTransformer(agentArgument));
 		
-		System.out.println("Trying to retransform loaded classes");
-		long failed = 0;
+		log("Trying to retransform loaded classes");
+		long unmodifiable = 0;
 		long success = 0;
 		for(final Class<?> loadedClazz : instrumentation.getAllLoadedClasses())
 		{
 			if(loadedClazz.getName().startsWith("software.xdev.tools")
 				|| loadedClazz.getName().startsWith("javassist"))
 			{
-				System.out.println("Ignoring " + loadedClazz.getName());
+				log("Ignoring " + loadedClazz.getName());
 				continue;
 			}
 			
@@ -99,10 +96,10 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 			}
 			catch(final UnmodifiableClassException e)
 			{
-				failed++;
+				unmodifiable++;
 			}
 		}
-		System.out.println("Retransform loaded classes; " + success + "x successful, " + failed + "x failed");
+		log("Retransformed loaded classes; " + success + "x successful, " + unmodifiable + "x unmodifiable");
 	}
 	
 	@Override
@@ -116,13 +113,13 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 		byte[] resultingBytes = bytes;
 		if(className == null)
 		{
-			System.out.println("ClassName was null; Class=" + clazz.getCanonicalName());
+			log("ClassName was null; Class=" + clazz.getCanonicalName());
 			return resultingBytes;
 		}
 		
 		if(this.excluded.stream().anyMatch(className::startsWith))
 		{
-			System.out.println("Excluded class=" + className);
+			log("Excluded class=" + className);
 			return resultingBytes;
 		}
 		
@@ -150,7 +147,7 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 					}
 					catch(final NotFoundException e)
 					{
-						// System.out.println("Could not find method '" + m.getSignature() + "':" + e.getMessage());
+						// log("Could not find method '" + m.getSignature() + "':" + e.getMessage());
 						return;
 					}
 					
@@ -165,13 +162,12 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 		}
 		catch(final Exception e)
 		{
-			System.out.println(
-				"Could not instrument "
-					+ className
-					+ "/"
-					+ clazz.getCanonicalName()
-					+ ", exception: "
-					+ e.getMessage());
+			log("Could not instrument "
+				+ className
+				+ "/"
+				+ clazz.getCanonicalName()
+				+ ", exception: "
+				+ e.getMessage());
 		}
 		
 		return resultingBytes;
@@ -188,9 +184,8 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 		if(methodName.equals("start"))
 		{
 			m.replace("{ "
-				+ "System.out.println(\"Detected Thread.start() id: \" + ((Thread)$0).getId() + \" name: \" + ("
-				+ "(Thread)"
-				+ "$0).getName()); "
+				+ "System.out.println(\"[TOA] Detected Thread.start() id: \" + ((Thread)$0).getId() + \" name: \" + "
+				+ "((Thread)$0).getName()); "
 				+ PRINT_STACK
 				+ PROCEED
 				+ "} ");
@@ -198,10 +193,16 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 		else if(methodName.equals("join"))
 		{
 			m.replace("{ "
-				+ "System.out.println(\"Detected Thread.join() id: \" + ((Thread)$0).getId() + \" name: \" + ((Thread)"
-				+ "$0).getName()); "
+				+ "System.out.println(\"[TOA] Detected Thread.join() id: \" + ((Thread)$0).getId() + \" name: \" + "
+				+ "((Thread)$0).getName()); "
 				+ PROCEED
 				+ "} ");
 		}
+	}
+	
+	@SuppressWarnings("java:S106")
+	private static void log(final String message)
+	{
+		System.out.println("[TOA] " + message);
 	}
 }
