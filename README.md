@@ -17,6 +17,10 @@ java -jar <appToInspect>.jar -javaagent:thread-origin-agent-1.0.0.jar
 java -jar <appToInspect>.jar -javaagent:"C:\temp\thread-origin-agent-1.0.0.jar"=sun/awt,sun/java2d
 ```
 
+> [!NOTE]
+> Please note that it's not possible to monitor all ``Thread`` starts as the ``Thread`` is loaded extremely early. 
+> Some static instantiations that use Threads e.g. ``ForkJoinPool#common`` are therefore not affected by changing the underlying bytecode.
+
 ## Support
 If you need support as soon as possible and you can't wait for any pull request, feel free to use [our support](https://xdev.software/en/services/support).
 
