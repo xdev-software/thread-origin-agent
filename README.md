@@ -42,6 +42,17 @@ java -javaagent:"C:\temp\thread-origin-agent-1.0.0.jar"=sun/awt,sun/java2d -jar 
 
 </details>
 
+### Additional configuration options
+
+These options can be configured as system properties. Example:<br/>
+``-DTOA_LOG_CALLER_THREADS``
+
+| Option | Description |
+| --- | --- |
+| ``TOA_LOG_THREAD_JOINS`` | Also logs ``Thread#join`` calls |
+| ``TOA_LOG_CALLER_THREADS`` | Displays additional information about the thread that started the new thread |
+| ``TOA_DISPLAY_METHOD_INSTRUMENTATION_FAILURES`` | Displays method instrumentation failures.<br/>This happens when a method is not present or can't be instrumented due to other reasons (e.g. JDK internal method).<br/>Produces a lot of log output so it's recommended to only enable it for debugging |
+
 ## Support
 If you need support as soon as possible and you can't wait for any pull request, feel free to use [our support](https://xdev.software/en/services/support).
 
