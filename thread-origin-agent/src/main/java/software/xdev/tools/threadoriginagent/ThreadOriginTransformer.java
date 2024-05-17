@@ -40,8 +40,17 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 		System.getProperty("TOA_DISPLAY_METHOD_INSTRUMENTATION_FAILURES") != null;
 	private static final boolean LOG_THREAD_JOINS =
 		System.getProperty("TOA_LOG_THREAD_JOINS") != null;
+	private static final boolean LOG_CALLER_THREADS =
+		System.getProperty("TOA_LOG_CALLER_THREADS") != null;
 	
 	private static final String PROCEED = "$proceed($$); ";
+	
+	private static final String PRINT_CALLER_THREAD = LOG_CALLER_THREADS
+		? "java.lang.Thread currentThread = java.lang.Thread.currentThread(); "
+			+ "System.out.println(\"[TOA] Called from \" + currentThread.getClass().getName() + "
+			+ "\" id: \" + currentThread.getId() + "
+			+ "\" name: \" + currentThread.getName()); "
+		: "";
 	
 	private static final String PRINT_STACK =
 		"java.lang.StackTraceElement[] elements = java.lang.Thread.currentThread().getStackTrace(); "
@@ -237,6 +246,7 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 				+ declaringClass.getName()
 				+ ".start() id: \" + ((Thread)$0).getId() + \" name: \" + "
 				+ "((Thread)$0).getName()); "
+				+ PRINT_CALLER_THREAD
 				+ PRINT_STACK
 				+ PROCEED
 				+ "} ");
@@ -248,6 +258,7 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 				+ declaringClass.getName()
 				+ ".join() id: \" + ((Thread)$0).getId() + \" name: \" + "
 				+ "((Thread)$0).getName()); "
+				+ PRINT_CALLER_THREAD
 				+ PROCEED
 				+ "} ");
 		}
