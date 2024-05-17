@@ -1,3 +1,7 @@
+# 1.1.0
+* Add option to log caller threads #11 (@3nol)
+* Updated dependencies
+
 # 1.0.1
 * Reword and improve logging 
 * Can now monitor classes that extend from Thread
