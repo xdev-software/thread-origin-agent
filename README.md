@@ -1,6 +1,6 @@
 [![Build](https://img.shields.io/github/actions/workflow/status/xdev-software/thread-origin-agent/checkBuild.yml?branch=develop)](https://github.com/xdev-software/thread-origin-agent/actions/workflows/checkBuild.yml?query=branch%3Adevelop)
 
-# thread-origin-agent
+# Thread Origin Agent
 
 In many situations is it helpful to find out who created a [Thread](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Thread.html).
 
