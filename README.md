@@ -1,4 +1,4 @@
-[![Build](https://img.shields.io/github/actions/workflow/status/xdev-software/thread-origin-agent/checkBuild.yml?branch=develop)](https://github.com/xdev-software/thread-origin-agent/actions/workflows/checkBuild.yml?query=branch%3Adevelop)
+[![Build](https://img.shields.io/github/actions/workflow/status/xdev-software/thread-origin-agent/check-build.yml?branch=develop)](https://github.com/xdev-software/thread-origin-agent/actions/workflows/check-build.yml?query=branch%3Adevelop)
 
 # Thread Origin Agent
 
