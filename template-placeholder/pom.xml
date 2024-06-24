@@ -5,19 +5,6 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>software.xdev</groupId>
-<<<<<<<< HEAD:template-placeholder/pom.xml
-	<artifactId>template-placeholder</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
-
-	<name>template-placeholder</name>
-	<description>template-placeholder</description>
-	<url>https://github.com/xdev-software/template-placeholder</url>
-
-	<scm>
-		<url>https://github.com/xdev-software/template-placeholder</url>
-		<connection>scm:git:https://github.com/xdev-software/template-placeholder.git</connection>
-========
 	<artifactId>thread-origin-agent</artifactId>
 	<version>1.1.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -29,7 +16,6 @@
 	<scm>
 		<url>https://github.com/xdev-software/thread-origin-agent</url>
 		<connection>scm:git:https://github.com/xdev-software/thread-origin-agent.git</connection>
->>>>>>>> develop:thread-origin-agent/pom.xml
 	</scm>
 
 	<inceptionYear>2019</inceptionYear>
@@ -154,22 +140,8 @@
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-<<<<<<<< HEAD:template-placeholder/pom.xml
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.7.0</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-========
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>3.7.1</version>
->>>>>>>> develop:thread-origin-agent/pom.xml
 				<configuration>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
@@ -193,69 +165,6 @@
 	</build>
 	<profiles>
 		<profile>
-<<<<<<<< HEAD:template-placeholder/pom.xml
-			<id>ossrh</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>flatten-maven-plugin</artifactId>
-						<version>1.6.0</version>
-						<configuration>
-							<flattenMode>ossrh</flattenMode>
-						</configuration>
-						<executions>
-							<execution>
-								<id>flatten</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>flatten</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-gpg-plugin</artifactId>
-						<version>3.2.4</version>
-						<executions>
-							<execution>
-								<id>sign-artifacts</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-								<configuration>
-									<!-- Fixes "gpg: signing failed: Inappropriate ioctl for device" -->
-									<!-- Prevent `gpg` from using pinentry programs -->
-									<gpgArguments>
-										<arg>--pinentry-mode</arg>
-										<arg>loopback</arg>
-									</gpgArguments>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					
-					<plugin>
-						<groupId>org.sonatype.plugins</groupId>
-						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>1.7.0</version>
-						<extensions>true</extensions>
-						<configuration>
-							<serverId>ossrh</serverId>
-							<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-							<!-- Sometimes OSSRH is really slow -->
-							<stagingProgressTimeoutMinutes>30</stagingProgressTimeoutMinutes>
-							<autoReleaseAfterClose>true</autoReleaseAfterClose>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-========
->>>>>>>> develop:thread-origin-agent/pom.xml
 			<id>checkstyle</id>
 			<build>
 				<plugins>
