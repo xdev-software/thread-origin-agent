@@ -240,7 +240,7 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 	void replaceThread(final MethodCall m, final String methodName, final CtClass declaringClass)
 		throws CannotCompileException
 	{
-		if(methodName.equals("start"))
+		if("start".equals(methodName))
 		{
 			m.replace("{ "
 				+ "System.out.println(\"[TOA] Detected "
@@ -252,7 +252,7 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 				+ PROCEED
 				+ "} ");
 		}
-		else if(LOG_THREAD_JOINS && methodName.equals("join"))
+		else if(LOG_THREAD_JOINS && "join".equals(methodName))
 		{
 			m.replace("{ "
 				+ "System.out.println(\"[TOA] Detected "
@@ -265,7 +265,7 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 		}
 	}
 	
-	@SuppressWarnings("java:S106")
+	@SuppressWarnings({"java:S106", "PMD.SystemPrintln"})
 	private static void log(final String message)
 	{
 		System.out.println("[TOA] " + message);
