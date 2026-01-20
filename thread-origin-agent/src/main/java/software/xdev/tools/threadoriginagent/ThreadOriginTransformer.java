@@ -130,7 +130,7 @@ public class ThreadOriginTransformer implements ClassFileTransformer
 		log("Retransformed loaded classes; " + success + "x successful, " + unmodifiable + "x unmodifiable");
 	}
 	
-	@SuppressWarnings({"PMD.CognitiveComplexity", "PMD.NPathComplexity"})
+	@SuppressWarnings("PMD.CognitiveComplexity")
 	@Override
 	public byte[] transform(
 		final ClassLoader loader,
