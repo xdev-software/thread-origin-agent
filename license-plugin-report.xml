@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<licensePluginReport goal="FORMAT" timestamp="1768927044302">
+    <module artifactId="thread-origin-agent" groupId="software.xdev" version="1.1.1"/>
+    <files>
+        <file path="src/main/java/software/xdev/tools/threadoriginagent/ThreadOriginTransformer.java" result="NOOP"/>
+    </files>
+</licensePluginReport>
