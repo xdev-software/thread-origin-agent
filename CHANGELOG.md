@@ -1,3 +1,6 @@
+# 1.1.1
+* Updated dependencies
+
 # 1.1.0
 * Add option to log caller threads #11 (@3nol)
 * Updated dependencies
